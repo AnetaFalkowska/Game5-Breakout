@@ -1,15 +1,15 @@
 const grid = document.querySelector(".grid");
 const brickWidth = 100;
 const brickHeight = 20;
-const boardHeight = 560;
-const boardWidth = 300;
+const boardWidth = 560;
+const boardHeight = 270;
 let scoreDisplay = document.querySelector("#score");
 let playerStartingPositionX = 230;
 let playerCurrentPositionX = playerStartingPositionX;
 let ballStartingPosition = [280, 23];
 let ballCurrentPosition = ballStartingPosition;
-let directionX = 2;
-let directionY = 2;
+let directionX = 3;
+let directionY = 3;
 let ballDiameter = 15;
 let identifier;
 let score = 0;
@@ -24,21 +24,21 @@ class Brick {
 }
 
 const bricks = [
-  new Brick(10, 270),
   new Brick(10, 240),
   new Brick(10, 210),
-  new Brick(120, 270),
+  new Brick(10, 180),
   new Brick(120, 240),
   new Brick(120, 210),
-  new Brick(230, 270),
+  new Brick(120, 180),
   new Brick(230, 240),
   new Brick(230, 210),
-  new Brick(340, 270),
+  new Brick(230, 180),
   new Brick(340, 240),
   new Brick(340, 210),
-  new Brick(450, 270),
+  new Brick(340, 180),
   new Brick(450, 240),
   new Brick(450, 210),
+  new Brick(450, 180),
 ];
 
 bricks.forEach((element) => {
@@ -59,7 +59,7 @@ document.addEventListener("keydown", movePlayer)
 function movePlayer(event) {
   switch (event.key) {
     case "ArrowRight":
-      if (playerCurrentPositionX < boardHeight - brickWidth) {
+      if (playerCurrentPositionX < boardWidth - brickWidth) {
         playerCurrentPositionX += 10;
       }
       break;
@@ -96,8 +96,8 @@ function checkForCollision() {
 
   // wall collisions
   if (
-    ballCurrentPosition[1] >= boardWidth - ballDiameter ||
-    ballCurrentPosition[0] >= boardHeight - ballDiameter ||
+    ballCurrentPosition[1] >= boardHeight - ballDiameter ||
+    ballCurrentPosition[0] >= boardWidth - ballDiameter ||
     ballCurrentPosition[0] <= 0
   ) {
     changeDirection();
@@ -105,7 +105,7 @@ function checkForCollision() {
   if (ballCurrentPosition[1] < 0) {
     scoreDisplay.innerHTML = "Game over!!!";
     clearInterval(identifier);
-    document.addEventListener("keydown", movePlayer)
+    document.removeEventListener("keydown", movePlayer)
   }
 
   // brick collisions
@@ -126,7 +126,7 @@ function checkForCollision() {
       if (bricks.length === 0) {
         scoreDisplay.innerHTML = "You win!!!";
         clearInterval(identifier);
-        document.addEventListener("keydown", movePlayer);
+        document.removeEventListener("keydown", movePlayer);
       }
     }
   }
@@ -141,20 +141,20 @@ function checkForCollision() {
 }
 
 function changeDirection() {
-  if (directionX === 2 && directionY === 2) {
-    directionY = -2;
+  if (directionX === 3 && directionY === 3) {
+    directionY = -3;
     return;
   }
-  if (directionX === -2 && directionY === 2) {
-    directionX = 2;
+  if (directionX === -3 && directionY === 3) {
+    directionX = 3;
     return;
   }
-  if (directionX === 2 && directionY === -2) {
-    directionX = -2;
+  if (directionX === 3 && directionY === -3) {
+    directionX = -3;
     return;
   }
-  if (directionX === -2 && directionY === -2) {
-    directionY = 2;
+  if (directionX === -3 && directionY === -3) {
+    directionY = 3;
     return;
   }
 }
